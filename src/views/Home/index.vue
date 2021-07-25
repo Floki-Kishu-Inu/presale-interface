@@ -11,13 +11,13 @@
         <div class="button-row">
           <div class="button"
           @click="buyWithETH">Buy with ETH</div>
-          <span class="button-text">{{ethPrice}}ETH / 1FlokII</span>
+          <span class="button-text">{{ethPrice}}ETH / 1FLOKII</span>
         </div>
         <div class="button-row">
           <div class="button"
           @click="buyWithUSDT"
           >Buy with USDT</div>
-          <span class="button-text">{{usdtPrice}}USDT / 1FlokII</span>
+          <span class="button-text">{{usdtPrice}}USDT / 1FLOKII</span>
         </div>
       </div>
       <div class="address" v-if="user.address">
@@ -25,13 +25,13 @@
       </div>
       <div class="list-wrapper">
         <div class="list-container">
-          <div class="list-item">Alice bought 3000 FlokII</div>
-          <div class="list-item">Bob bought 2530 FlokII</div>
+          <div class="list-item">Alice bought 3000 FLOKII</div>
+          <div class="list-item">Bob bought 2530 FLOKII</div>
         </div>
       </div>
 
       <div class="media-group">
-        <div class="media-item">
+        <!-- <div class="media-item">
           <img src="~@/assets/img/twitter.png" alt="">
           <span>Twitter</span>
         </div>
@@ -42,7 +42,12 @@
         <div class="media-item">
           <img src="~@/assets/img/github.png" alt="">
           <span>Github</span>
+        </div> -->
+        
+        <div class="button-row">
+          <span class="button-text">Audited By: TechRateAudited By: TechRate</span>
         </div>
+        
       </div>
     </div>
 
@@ -97,8 +102,8 @@ export default {
       buyLoading: false,
 
       amount: 0,
-      usdtPrice: 0.01,
-      ethPrice: 0.000005,
+      usdtPrice: 0.007,
+      ethPrice: 0.00000326,
     };
   },
 

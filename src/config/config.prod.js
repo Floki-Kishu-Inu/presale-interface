@@ -33,8 +33,8 @@ export default {
 
   appDownload: '这是下载二维码',
 
-  FLOKIIPreSaleAddress: '0x388D9d4985f367747C971D8A925c8a02D3fEE79F',
-  FlokiKishuAddress: '0x4022707807D096cb97EE81F155F26bC68a2035a5',
+  FLOKIIPreSaleAddress: '0xa33748130ce468fF52d44Bb5F0fC028c1486C835',
+  FlokiKishuAddress: '0x6E5466F3a2d82862b9F3f91b54892c52f1E3f4E8',
   USDTAddress: '0xEBA2a7912bC80edf9966648ae0c43190CDDffAeC',
 
   // FLOKII(ERC20 Token):0xb5a08D63Cef12584681D586D64413b38Cf5DC4F1
@@ -47,5 +47,5 @@ export default {
   graphQlUrl: 'https://api.thegraph.com/subgraphs/name/coin-bid/coinbid-subgraph',
 };
 
-// FLOKII(ERC20 Token):0x4022707807D096cb97EE81F155F26bC68a2035a5
-// PreSale合约:0x388D9d4985f367747C971D8A925c8a02D3fEE79F
+// FLOKII(ERC20 Token):0x6E5466F3a2d82862b9F3f91b54892c52f1E3f4E8
+// PreSale合约:0xa33748130ce468fF52d44Bb5F0fC028c1486C835
