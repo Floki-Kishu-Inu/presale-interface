@@ -4,7 +4,8 @@
       <div class="fixed-header">
         <navbar />
       </div>
-      <router-view v-if="user.loaded"/>
+      <router-view
+      />
       <footerbar />
   </div>
 </template>

@@ -73,8 +73,6 @@ if (window.ethereum) {
   });
 }
 
-
-console.log(window.ethereum)
 // console.log( window.connector.connected)
 window.connector = new WalletConnect({
   bridge: "https://bridge.walletconnect.org", // Required
