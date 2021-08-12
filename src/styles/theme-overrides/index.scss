@@ -13,18 +13,9 @@ $theme-colors: (
 @import '~bootstrap-vue';
 
 
-body {
-  // height: 100vh;
-  
-}
-// #app {
-//   background: url(~@/assets/img/bottom-bg@2x.png) center 100% / auto 1400px no-repeat;
-// }
+
 .container {
-  // max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  background: url(~@/assets/img/background.jpg) center 100% /  cover no-repeat;
+  background: url(~@/assets/img/background.jpg) center 0 /  cover no-repeat;
 }
 
 

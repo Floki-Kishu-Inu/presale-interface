@@ -7,13 +7,13 @@
           FLOKII
         </div>
         <div class="audit">
+          <a href="/Floki_Kishu_Inu.pdf">
           Audited By: TechRate
+          </a>
         </div>
       </div>
        <div class="logo-wrapper">
         <img src="~@/assets/img_v2/top_logo.png" alt="">
-
-
       </div>
       <div class="slogan">
         The #1 Meme Token on Ethereum Blockchain
@@ -94,15 +94,21 @@
          A decentralized community driven platform with facility of swap. earn. yield. lend. and borrow. leveraging under one application. Welcome to Defi universe.
        </div>
        <div class="social-group">
-         <img src="~@/assets/img_v2/icon_twitter.png" alt="">
-         <img src="~@/assets/img_v2/icon_telegram.png" alt="">
-         <img src="~@/assets/img_v2/icon_github.png" alt="">
+         <a href="https://twitter.com/flokikishu/status/1422106726342434817?s=21" target="_blank">
+           <img src="~@/assets/img_v2/icon_twitter.png" alt="">
+         </a>
+         <a href="https://t.me/Flokikishu" target="_blank">
+           <img src="~@/assets/img_v2/icon_telegram.png" alt="">
+         </a>
+         <a href="https://github.com/Floki-Kishu-Inu/" target="_blank">
+           <img src="~@/assets/img_v2/icon_github.png" alt="">
+         </a>
        </div>
 
        <div class="link-group">
-         <button class="link-btn">Audit Report</button>
-         <button class="link-btn">Support</button>
-         <button class="link-btn">Floki-Kishu.io</button>
+         <a class="link-btn">Audit Report</a>
+         <a class="link-btn">Support</a>
+         <a class="link-btn">Floki-Kishu.io</a>
        </div>
 
        <div class="copyright">
@@ -144,7 +150,7 @@ import { mapState } from 'vuex';
 import { utils, BigNumber } from 'ethers';
 import config from '@/config';
 import {
-  FLOKIIPreSaleInterface, USDTContract, USDTInterface, provider,
+  FLOKIIPreSaleInterface, FLOKIIPreSaleContract, USDTContract, USDTInterface, provider,
 } from '@/eth/ethereum';
 import sendTransaction from '@/common/sendTransaction';
 
@@ -162,7 +168,7 @@ export default {
 
       amount: 0,
       usdtPrice: 0.007,
-      ethPrice: 0.00000326,
+      ethPrice: 0,
     };
   },
 
@@ -189,7 +195,20 @@ export default {
       return 0;
     },
   },
+
+  created() {
+    this.getPrices();
+  },
   methods: {
+
+    async getPrices() {
+      const [ethPrice] = await FLOKIIPreSaleContract.functions.getEthPrice();
+
+      // console.log(this.usdtPrice)
+      // console.log(ethPrice)
+      this.ethPrice = (this.usdtPrice / ethPrice).toFixed(8)
+      // console.log(ethPrice.div(1e6).mul(this.usdtPrice));
+    },
     unlockByWalletConnect() {
       // console.log('xxx');
       // this.$store.dispatch('unlockByMetaMask');
@@ -367,9 +386,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// .home {
+//   min-height: 100vh;
+//   background: #000;
+// }
+
+// .footer {
+//   position: absolute;
+//   bottom: 0;
+//   left: 0;
+//   width: 100%;
+// }
 .container {
+  min-height: calc(100vh - 224px);
   padding-bottom: 30px;
-  max-width: 100%;
+  min-width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-bar {
@@ -384,15 +416,19 @@ export default {
   .nav-logo-wrapper {
     color: #fff;
   }
-
+  & .audit {
+    & a {
+      color: #fff;
+    }
+  }
 }
 
 .logo-wrapper {
   text-align: center;
   position: relative;
-  margin-top: 96px;
+  margin-top: 24px;
   img {
-    width: 240px;
+    width: 180px;
   }
 }
 
@@ -562,6 +598,9 @@ export default {
       border: 0;
       border-radius: 12px;
       margin-right: 6px;
+      background: #aaa;
+      color: #000;
+      padding: 2px 8px;
     }
   }
 }
@@ -621,6 +660,18 @@ export default {
   //   margin-top: 24px;
   //   position: static;
   // }
+
+  .container {
+    min-height: auto;
+  }
+
+  .logo-wrapper {
+    margin-top: 48px;
+    img {
+      width: 180px;
+    }
+}
+
   .button-group {
      .button-text {
         position: static;
