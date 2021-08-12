@@ -211,6 +211,7 @@ export default {
     },
 
     buy() {
+
       if (this.buyType === 'eth') {
         this.ethBuySubmit();
       } else {
@@ -220,6 +221,7 @@ export default {
 
     async ethBuySubmit() {
       // this.$bvModal.hide('buy-modal')
+
 
       if (!this.amount) {
         __g_root__.$bvToast.toast('Please input amount', {
@@ -257,6 +259,8 @@ export default {
     },
 
     async usdtBuySubmit() {
+
+
       if (!this.amount) {
         __g_root__.$bvToast.toast('Please input amount', {
           title: this.$t('tip'),
@@ -330,11 +334,30 @@ export default {
     },
 
     buyWithETH() {
+       if (!this.user.address) {
+        __g_root__.$bvToast.toast('Please connect wallet', {
+          title: this.$t('tip'),
+          variant: 'danger',
+          autoHideDelay: 5000,
+        });
+        return false;
+      }
+
       this.buyType = 'eth';
       this.$bvModal.show('buy-modal');
+
     },
 
     buyWithUSDT() {
+       if (!this.user.address) {
+        __g_root__.$bvToast.toast('Please connect wallet', {
+          title: this.$t('tip'),
+          variant: 'danger',
+          autoHideDelay: 5000,
+        });
+        return false;
+      }
+
       this.buyType = 'usdt';
       this.$bvModal.show('buy-modal');
     },
