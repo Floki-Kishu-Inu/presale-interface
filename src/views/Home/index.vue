@@ -1,13 +1,48 @@
 <template>
   <div class="home">
     <div class="container">
-       <div class="logo-wrapper">
-        <img src="~@/assets/img/logo.png" alt="">
-
-        <button class="connect-wallet"  v-if="!user.address" @click="$bvModal.show('select-modal')">Connect Wallet</button>
-        <button class="connect-wallet"  v-if="user.address && user.isWalletConnect" @click="disconnect">Disconnect</button>
+      <div class="nav-bar">
+        <div class="nav-logo-wrapper">
+          <img class="nav-logo" src="~@/assets/img_v2/logo.png" alt="">
+          FLOKII
+        </div>
+        <div class="audit">
+          Audited By: TechRate
+        </div>
       </div>
-      <div class="button-group">
+       <div class="logo-wrapper">
+        <img src="~@/assets/img_v2/top_logo.png" alt="">
+
+
+      </div>
+      <div class="slogan">
+        The #1 Meme Token on Ethereum Blockchain
+      </div>
+
+      <div class="buy-section">
+        <div class="buy-inner-section">
+          <div class="buy-content">
+            Buy directly from your wallet.
+          </div>
+
+          <button class="connect-wallet"  v-if="!user.address" @click="$bvModal.show('select-modal')">Connect Wallet</button>
+          <button class="connect-wallet"  v-if="user.address && user.isWalletConnect" @click="disconnect">Disconnect</button>
+        </div>
+
+        <div class="button-group">
+          <div class="buy-button" @click="buyWithETH">
+            <div>Buy with ETH</div>
+            <div class="price">{{ethPrice}}ETH/1FLOKII</div>
+          </div>
+          <div class="buy-button" @click="buyWithUSDT">
+            <div>Buy with USDT</div>
+            <div class="price">{{usdtPrice}}USDT/1FLOKII</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- <div class="button-group">
         <div class="button-row">
           <div class="button"
           @click="buyWithETH">Buy with ETH</div>
@@ -19,8 +54,8 @@
           >Buy with USDT</div>
           <span class="button-text">{{usdtPrice}}USDT / 1FLOKII</span>
         </div>
-      </div>
-      <div class="address" v-if="user.address">
+      </div> -->
+      <!-- <div class="address" v-if="user.address">
         Contract address: {{user.address | trimAddress}}
       </div>
       <div class="list-wrapper">
@@ -28,10 +63,10 @@
           <div class="list-item">Alice bought 3000 FLOKII</div>
           <div class="list-item">Bob bought 2530 FLOKII</div>
         </div>
-      </div>
-
+      </div> -->
+    <!--
       <div class="media-group">
-        <!-- <div class="media-item">
+        <div class="media-item">
           <img src="~@/assets/img/twitter.png" alt="">
           <span>Twitter</span>
         </div>
@@ -42,15 +77,39 @@
         <div class="media-item">
           <img src="~@/assets/img/github.png" alt="">
           <span>Github</span>
-        </div> -->
-        
-        <div class="button-row">
-          <span class="button-text">Audited By: TechRateAudited By: TechRate</span>
         </div>
-        
-      </div>
+      </div> -->
     </div>
 
+    <div class="footer">
+      <div class="build-with">
+        Build with <img src="~@/assets/img_v2/chainlink.png" alt="">
+      </div>
+      <div class="footer-content">
+       <div class="footer-logo-wrapper">
+          <img src="~@/assets/img_v2/logo.png" alt="">
+          FLOKII
+       </div>
+       <div class="desc">
+         A decentralized community driven platform with facility of swap. earn. yield. lend. and borrow. leveraging under one application. Welcome to Defi universe.
+       </div>
+       <div class="social-group">
+         <img src="~@/assets/img_v2/icon_twitter.png" alt="">
+         <img src="~@/assets/img_v2/icon_telegram.png" alt="">
+         <img src="~@/assets/img_v2/icon_github.png" alt="">
+       </div>
+
+       <div class="link-group">
+         <button class="link-btn">Audit Report</button>
+         <button class="link-btn">Support</button>
+         <button class="link-btn">Floki-Kishu.io</button>
+       </div>
+
+       <div class="copyright">
+         2021 FLOKI KISHU INU. ALL RIGHTS RESERVED
+       </div>
+      </div>
+    </div>
     <b-modal id="buy-modal" modal-class="buy-modal" centered hide-footer hide-header>
       <img class="close-btn" @click="$bvModal.hide('buy-modal')" src="~@/assets/img/close-btn.png" alt="">
       <div class="d-block text-center">
@@ -285,75 +344,216 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  padding-bottom: 30px;
+  max-width: 100%;
+}
+
+.nav-bar {
+  padding: 18px 0;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .nav-logo {
+    width: 48px;
+  }
+  .nav-logo-wrapper {
+    color: #fff;
+  }
+
+}
+
 .logo-wrapper {
   text-align: center;
   position: relative;
-  // background: url(~@/assets/img/bottom-bg@2x.png) 100% 100% / 400px auto no-repeat;
+  margin-top: 96px;
+  img {
+    width: 240px;
+  }
+}
+
+.slogan {
+  color: #fff;
+  text-align:center;
+  margin-top: 12px;
+}
+
+.buy-section {
+  height: 260px;
+  margin-top: 24px;
+  width: 345px;
+  margin-left: auto;
+  margin-right: auto;
+  background:
+    url(~@/assets/img_v2/buy_outline.png) center / 340px auto no-repeat;
+}
+
+.buy-inner-section {
+  position: relative;
+  height: 180px;
+  color: #fff;
+  background:
+    url(~@/assets/img_v2/buy_bg.png) center 18px / 310px auto no-repeat;
+
+  .buy-content {
+    color: #fff;
+    text-align: center;
+    padding-top: 64px;
+    font-weight: bold;
+    font-size: 18px;
+  }
 }
 
 .connect-wallet {
-  width: 260px;
-  height: 54px;
+  height: 28px;
   color: #fff;
   border: 1px solid #fff;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
-  line-height: 54px;
+  line-height: 26px;
   text-align: center;
-  border-radius: 27px;
-  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: linear-gradient(to right, #2f6dd4, #be14ba);
   position: absolute;
-  left: calc(50% + 180px);
-  top: 80px;
   cursor: pointer;
+  right: 36px;
+  bottom: 24px;
 }
 
 .button-group {
-  margin-top: 80px;
-   & .button-row {
-    position: relative;
-    &:nth-child(2) {
-      margin-top: 8px;
-    }
-   }
-
-  .button {
-    width: 351px;
-    height: 88px;
-    margin-left: auto;
-    margin-right: auto;
-    background: url(~@/assets/img/button-bg.png) center / cover no-repeat;
-
-    text-align: center;
-    line-height: 84px;
-    color: #fff;
-    font-size: 32px;
-    font-weight: bold;
-    cursor: pointer;
-
-  }
-
-  .button-text {
-    color: #fff;
-    position: absolute;
-    // left: 50%;
-    top: 24px;
-    font-size: 28px;
-    left: calc(50% + 180px);
-  }
-}
-
-.address {
   color: #fff;
-  font-size: 30px;
-  // left: 60px;
-  white-space: nowrap;
-  position: relative;
-  // padding-left: 260px;
-  // padding-left: 430px;
-  text-align: center;
-
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  .buy-button {
+    background: url(~@/assets/img_v2/button_bg@2x.png) center / 100% auto no-repeat;
+    width: 160px;
+    text-align: center;
+    height: 50px;
+    color: #364c87;
+    font-weight: bold;
+    line-height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .price {
+      font-size: 12px;
+      line-height: 12px;
+      margin-top: 2px;
+      color: #fff;
+      font-weight: 400;
+    }
+  }
 }
+
+// .button-group {
+//   margin-top: 80px;
+//    & .button-row {
+//     position: relative;
+//     &:nth-child(2) {
+//       margin-top: 8px;
+//     }
+//    }
+
+//   .button {
+//     width: 351px;
+//     height: 88px;
+//     margin-left: auto;
+//     margin-right: auto;
+//     background: url(~@/assets/img/button-bg.png) center / cover no-repeat;
+
+//     text-align: center;
+//     line-height: 84px;
+//     color: #fff;
+//     font-size: 32px;
+//     font-weight: bold;
+//     cursor: pointer;
+
+//   }
+
+//   .button-text {
+//     color: #fff;
+//     position: absolute;
+//     // left: 50%;
+//     top: 24px;
+//     font-size: 28px;
+//     left: calc(50% + 180px);
+//   }
+// }
+
+.footer {
+  background: #171522;
+}
+
+
+.build-with {
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  top: -10px;
+  & img {
+    height: 32px;
+    margin-left: 12px;
+  }
+}
+
+.footer-content {
+  color: #fff;
+  padding: 0 20px;
+  & .footer-logo-wrapper {
+    font-weight: bold;
+    text-align: left;
+    img {
+      width: 48px;
+      margin-right: 12px;
+    }
+  }
+
+  & .desc {
+    font-size: 13px;
+    margin-top: 8px;
+  }
+
+  & .social-group {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    img {
+      width: 24px;
+      margin-right: 24px;
+    }
+  }
+
+  & .copyright {
+    text-align: right;
+    font-size: 13px;
+    padding: 12px 0;
+    margin-top: 8px;
+  }
+
+  & .link-group {
+    .link-btn {
+      font-size: 12px;
+      border: 0;
+      border-radius: 12px;
+      margin-right: 6px;
+    }
+  }
+}
+
+// .address {
+//   color: #fff;
+//   font-size: 30px;
+//   // left: 60px;
+//   white-space: nowrap;
+//   position: relative;
+//   // padding-left: 260px;
+//   // padding-left: 430px;
+//   text-align: center;
+
+// }
 
 .list-wrapper {
   width: 427px;
@@ -394,10 +594,10 @@ export default {
 }
 
 @media (max-width: 576px) {
-  .connect-wallet {
-    margin-top: 24px;
-    position: static;
-  }
+  // .connect-wallet {
+  //   margin-top: 24px;
+  //   position: static;
+  // }
   .button-group {
      .button-text {
         position: static;
@@ -430,6 +630,7 @@ export default {
     right: 20px;
     top: 20px;
     cursor: pointer;
+    width: 18px;
   }
 
   .modal-dialog {
@@ -438,14 +639,14 @@ export default {
   }
 
   .modal-body {
-    padding-top: 60px;
+    padding-top: 54px;
   }
 
   .modal-content {
     background: url(~@/assets/img/modal-bg.png) center / cover no-repeat;
     width: 763px !important;
     max-width: 763px;
-    height: 288px;
+    height: 220px;
   }
 
   .input-wrapper {
@@ -456,7 +657,7 @@ export default {
       background: rgba(255, 255, 255, .2);
       border: 1px solid #fff;
       width: 408px;
-      height: 56px;
+      height: 48px;
       font-size: 36px;
       padding: 0 8px;
     text-align: right;
@@ -464,12 +665,12 @@ export default {
     color: #fff;
     }
     .amount {
-      height: 44px;
-      line-height: 44px;
+      height: 32px;
+      line-height: 32px;
       border-bottom: 1px solid #fff;
       color: #fff;
       margin-top: 8px;
-      font-size: 36px;
+      font-size: 24px;
       padding: 0 8px;
 
     text-align: right;
@@ -478,15 +679,15 @@ export default {
 
   .modal-button-group {
     text-align: center;
-      margin-top: 36px;
+    margin-top: 12px;
     & button {
       background: rgba(255, 255, 255, .02);
       border: 1px solid #fff;
       width: 128px;
-      height: 46px;
-      line-height: 46px;
+      height: 42px;
+      line-height: 42px;
       padding: 0;
-      font-size: 36px;
+      font-size: 24px;
       &:nth-child(1) {
         margin-right: 16px;
       }
@@ -502,12 +703,12 @@ export default {
       background: rgba(255, 255, 255, .02);
       border: 1px solid #fff;
       width: 280px;
-      height: 56px;
+      height: 48px;
       line-height: 46px;
       padding: 0;
-      font-size: 36px;
+      font-size: 24px;
       &:nth-child(2) {
-        margin-top: 48px;
+        margin-top: 24px;
       }
     }
   }
@@ -526,7 +727,7 @@ export default {
       background: url(~@/assets/img/modal-bg.png) center / cover no-repeat;
       width: 360px !important;
       max-width: 360px;
-      height: 288px;
+      // height: 220px;
     }
     .input-wrapper {
       width: 100%;

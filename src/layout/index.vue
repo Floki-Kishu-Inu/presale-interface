@@ -1,9 +1,9 @@
 <template>
   <div
     class="app-wrapper">
-      <div class="fixed-header">
+      <!-- <div class="fixed-header">
         <navbar />
-      </div>
+      </div> -->
       <router-view
       />
       <footerbar />

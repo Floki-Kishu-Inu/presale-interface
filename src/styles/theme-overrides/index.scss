@@ -14,7 +14,6 @@ $theme-colors: (
 
 
 body {
-  background: url(~@/assets/img/background.jpg) center 100% /  cover no-repeat;
   // height: 100vh;
   
 }
@@ -22,9 +21,10 @@ body {
 //   background: url(~@/assets/img/bottom-bg@2x.png) center 100% / auto 1400px no-repeat;
 // }
 .container {
-  max-width: 900px;
+  // max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+  background: url(~@/assets/img/background.jpg) center 100% /  cover no-repeat;
 }
 
 
