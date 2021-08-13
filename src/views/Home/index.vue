@@ -83,7 +83,7 @@
 
     <div class="footer">
       <div class="build-with">
-        Build with <img src="~@/assets/img_v2/chainlink.png" alt="">
+        Price feed by <img src="~@/assets/img_v2/chainlink.png" alt="">
       </div>
       <div class="footer-content">
        <div class="footer-logo-wrapper">
@@ -106,9 +106,9 @@
        </div>
 
        <div class="link-group">
-         <a class="link-btn">Audit Report</a>
-         <a class="link-btn">Support</a>
-         <a class="link-btn">Floki-Kishu.io</a>
+         <a class="link-btn" href="/Floki_Kishu_Inu.pdf">Audit Report</a>
+         <a class="link-btn" href="mailto:Contact@floki-kishu.io">Support</a>
+         <a class="link-btn" href="https://floki-kishu.io/#">Floki-Kishu.io</a>
        </div>
 
        <div class="copyright">
@@ -253,9 +253,12 @@ export default {
 
       this.buyLoading = true;
 
+      // console.log(BigNumber.from(this.ethPrice * 1e18).mul(this.amount))
+      // console.log(BigNumber.from(this.amount))
+      // console.log(BigNumber.from(this.amount).mul(this.ethPrice).mul(1e18))
       const txHash = await sendTransaction({
         to: config.FLOKIIPreSaleAddress,
-        value: utils.hexValue(this.ethPrice * this.amount * 1e18),
+        value: utils.hexValue(BigNumber.from(this.ethPrice * 1e18).mul(this.amount)),
         data: FLOKIIPreSaleInterface.encodeFunctionData('purchaseByETH()'),
       });
       const claimTx = await provider.waitForTransaction(txHash);
