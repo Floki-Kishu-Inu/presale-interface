@@ -17,6 +17,8 @@ import './filters/toFixed';
 import './filters/formatTime';
 import './filters/trimAddress';
 
+import './directive/numberInput';
+
 import '@/styles/theme-overrides/index.scss';
 
 // Make BootstrapVue available throughout your project

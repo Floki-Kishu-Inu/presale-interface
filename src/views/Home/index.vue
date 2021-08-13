@@ -121,7 +121,15 @@
       <div class="d-block text-center">
         <!-- <h3>Hello From This Modal!</h3> -->
         <div class="input-wrapper">
-          <input type="text" v-model.number="amount">
+          <div class="amount-input">
+             <input
+              type="text"
+              v-model.number="amount"
+              v-number-input
+              ref="amountInput"
+            >
+            <span class="unit">FLOKII</span>
+          </div>
           <div class="amount">
           {{total}}{{buyType}}
         </div>
@@ -166,7 +174,7 @@ export default {
       buyType: '',
       buyLoading: false,
 
-      amount: 0,
+      amount: '',
       usdtPrice: 0.007,
       ethPrice: 0,
     };
@@ -185,13 +193,18 @@ export default {
     ...mapState(['user']),
 
     total() {
-      if (this.buyType === 'usdt') {
-        return (this.amount * this.usdtPrice).toFixed(6);
+      // console.log(Number.isNaN(this.amount))
+      // console.log(this.amount)
+      if (this.amount > 0) {
+        if (this.buyType === 'USDT') {
+          return (this.amount * this.usdtPrice).toFixed(6);
+        }
+
+        if (this.buyType === 'ETH') {
+          return (this.amount * this.ethPrice).toFixed(6);
+        }
       }
 
-      if (this.buyType === 'eth') {
-        return (this.amount * this.ethPrice).toFixed(6);
-      }
       return 0;
     },
   },
@@ -231,7 +244,7 @@ export default {
 
     buy() {
 
-      if (this.buyType === 'eth') {
+      if (this.buyType === 'ETH') {
         this.ethBuySubmit();
       } else {
         this.usdtBuySubmit();
@@ -365,9 +378,11 @@ export default {
         return false;
       }
 
-      this.buyType = 'eth';
+      this.buyType = 'ETH';
       this.$bvModal.show('buy-modal');
-
+      setTimeout(() => {
+        this.$refs.amountInput.focus();
+      }, 500)
     },
 
     buyWithUSDT() {
@@ -380,8 +395,11 @@ export default {
         return false;
       }
 
-      this.buyType = 'usdt';
+      this.buyType = 'USDT';
       this.$bvModal.show('buy-modal');
+      setTimeout(() => {
+        this.$refs.amountInput.focus();
+      }, 500)
     },
 
   },
@@ -730,16 +748,29 @@ export default {
     width: 408px;
     margin-left: auto;
     margin-right: auto;
-    input {
-      background: rgba(255, 255, 255, .2);
-      border: 1px solid #fff;
-      width: 408px;
-      height: 48px;
-      font-size: 36px;
+     .amount-input {
       padding: 0 8px;
-    text-align: right;
-    border-radius: 4px;
-    color: #fff;
+      display: flex;
+      border: 1px solid #fff;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, .2);
+
+    }
+
+    .unit {
+      color: #fff;
+      font-size: 24px;
+      line-height: 48px;
+    }
+    input {
+      width: 320px;
+      height: 48px;
+      font-size: 28px;
+      border: 0;
+      outline: none;
+      text-align: center;
+      color: #fff;
+      background: transparent;
     }
     .amount {
       height: 32px;
