@@ -69,7 +69,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "client/js/" + ({}[chunkId]||chunkId) + "." + {"chunk-1fbbba2c":"3665b36c"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "client/js/" + ({}[chunkId]||chunkId) + "." + {"chunk-12fb7c36":"f2c319ab"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -103,11 +103,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"chunk-1fbbba2c":1};
+/******/ 		var cssChunks = {"chunk-12fb7c36":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "client/css/" + ({}[chunkId]||chunkId) + "." + {"chunk-1fbbba2c":"95b8f575"}[chunkId] + ".css";
+/******/ 				var href = "client/css/" + ({}[chunkId]||chunkId) + "." + {"chunk-12fb7c36":"6e83907b"}[chunkId] + ".css";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
@@ -1184,7 +1184,7 @@ var routes = [{
     path: '/',
     name: 'Home',
     component: function component() {
-      return __webpack_require__.e(/* import() */ "chunk-1fbbba2c").then(__webpack_require__.bind(null, "16c0"));
+      return __webpack_require__.e(/* import() */ "chunk-12fb7c36").then(__webpack_require__.bind(null, "16c0"));
     }
   } // {
   //   path: '/auction',

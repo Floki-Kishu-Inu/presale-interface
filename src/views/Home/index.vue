@@ -518,6 +518,7 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    cursor: pointer;
     .price {
       font-size: 12px;
       line-height: 12px;
