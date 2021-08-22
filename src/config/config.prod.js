@@ -13,10 +13,10 @@ export default {
   // minAllowance: 10 ** 30,
   // appId: '1234567',
 
-  // gethServer: 'https://mainnet.infura.io/v3/6ef437a0bfc743d0bbfe73f72c90afd4', 主网
-  // chainId: 1,
-  gethServer: 'https://kovan.infura.io/v3/6ef437a0bfc743d0bbfe73f72c90afd4',
-  chainId: 42,
+  gethServer: 'https://mainnet.infura.io/v3/6ef437a0bfc743d0bbfe73f72c90afd4', // 主网
+  chainId: 1,
+  // gethServer: 'https://kovan.infura.io/v3/6ef437a0bfc743d0bbfe73f72c90afd4',
+  // chainId: 42,
 
   addressZero: '0x0000000000000000000000000000000000000000',
   hashZero: '0x0000000000000000000000000000000000000000000000000000000000000000',
@@ -33,9 +33,9 @@ export default {
 
   appDownload: '这是下载二维码',
 
-  FLOKIIPreSaleAddress: '0x5AA963b711D8fD4944BeA18600d1bb8cd73Bc343',
-  FlokiKishuAddress: '0x1C18f55aDa4144317edeC16452dFe96bd0Bc17F6',
-  USDTAddress: '0xEBA2a7912bC80edf9966648ae0c43190CDDffAeC',
+  FLOKIIPreSaleAddress: '0xaF3Ab58B158C4779B53B00F9FcA2565427C9F430',
+  FlokiKishuAddress: '0xFf4DB8E71a8e2655e9295C2C817aC86e65767db1',
+  USDTAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
 
   // FLOKII(ERC20 Token):0xb5a08D63Cef12584681D586D64413b38Cf5DC4F1
   // PreSale合约:0xD2AF25E09147daB4f60B099249F4F35d398C8397

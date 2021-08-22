@@ -22,6 +22,8 @@
       <div class="buy-section">
         <div class="buy-inner-section">
           <div class="buy-content">
+            Option1
+            <br>
             Buy directly from your wallet.
           </div>
 
@@ -34,51 +36,34 @@
             <div>Buy with ETH</div>
             <div class="price">{{ethPrice}}ETH/1FLOKII</div>
           </div>
-          <div class="buy-button" @click="buyWithUSDT">
+          <!-- <div class="buy-button" @click="buyWithUSDT">
             <div>Buy with USDT</div>
             <div class="price">{{usdtPrice}}USDT/1FLOKII</div>
+          </div> -->
+        </div>
+
+      </div>
+
+      <div class="buy-section">
+        <div class="buy-inner-section">
+          <div class="buy-content">
+            Option2
+            <br>
+            Buy directly from your wallet.
+          </div>
+        </div>
+
+        <div class="address-group">
+          <div class="address-btn" id="address">
+           0xaF3Ab58B158C4779B53B00F9FcA2565427C9F430
+          </div>
+
+          <div class="copy-btn" data-clipboard-target="#address">
+            <img src="~@/assets/img_v2/copy_btn.png" alt="">
           </div>
         </div>
 
       </div>
-
-      <!-- <div class="button-group">
-        <div class="button-row">
-          <div class="button"
-          @click="buyWithETH">Buy with ETH</div>
-          <span class="button-text">{{ethPrice}}ETH / 1FLOKII</span>
-        </div>
-        <div class="button-row">
-          <div class="button"
-          @click="buyWithUSDT"
-          >Buy with USDT</div>
-          <span class="button-text">{{usdtPrice}}USDT / 1FLOKII</span>
-        </div>
-      </div> -->
-      <!-- <div class="address" v-if="user.address">
-        Contract address: {{user.address | trimAddress}}
-      </div>
-      <div class="list-wrapper">
-        <div class="list-container">
-          <div class="list-item">Alice bought 3000 FLOKII</div>
-          <div class="list-item">Bob bought 2530 FLOKII</div>
-        </div>
-      </div> -->
-    <!--
-      <div class="media-group">
-        <div class="media-item">
-          <img src="~@/assets/img/twitter.png" alt="">
-          <span>Twitter</span>
-        </div>
-        <div class="media-item">
-          <img src="~@/assets/img/facebook.png" alt="">
-          <span>Facebook</span>
-        </div>
-        <div class="media-item">
-          <img src="~@/assets/img/github.png" alt="">
-          <span>Github</span>
-        </div>
-      </div> -->
     </div>
 
     <div class="footer">
@@ -156,6 +141,7 @@
 // @ is an alias to /src
 import { mapState } from 'vuex';
 import { utils, BigNumber } from 'ethers';
+import ClipboardJS from 'clipboard';
 import config from '@/config';
 import {
   FLOKIIPreSaleInterface, FLOKIIPreSaleContract, USDTContract, USDTInterface, provider,
@@ -163,6 +149,7 @@ import {
 import sendTransaction from '@/common/sendTransaction';
 
 console.log(FLOKIIPreSaleInterface);
+
 export default {
   name: 'Home',
   components: {
@@ -211,6 +198,21 @@ export default {
 
   created() {
     this.getPrices();
+
+    const clipboard = new ClipboardJS('.copy-btn');
+
+    clipboard.on('success', (e) => {
+      __g_root__.$bvToast.toast('Copy success!', {
+        title: this.$t('tip'),
+        variant: 'success',
+        autoHideDelay: 5000,
+      });
+    });
+
+    clipboard.on('error', (e) => {
+      console.error('Action:', e.action);
+      console.error('Trigger:', e.trigger);
+    });
   },
   methods: {
 
@@ -219,7 +221,7 @@ export default {
 
       // console.log(this.usdtPrice)
       // console.log(ethPrice)
-      this.ethPrice = (this.usdtPrice / ethPrice).toFixed(8)
+      this.ethPrice = (this.usdtPrice / ethPrice).toFixed(8);
       // console.log(ethPrice.div(1e6).mul(this.usdtPrice));
     },
     unlockByWalletConnect() {
@@ -243,7 +245,6 @@ export default {
     },
 
     buy() {
-
       if (this.buyType === 'ETH') {
         this.ethBuySubmit();
       } else {
@@ -254,11 +255,72 @@ export default {
     async ethBuySubmit() {
       // this.$bvModal.hide('buy-modal')
 
-
       if (!this.amount) {
         __g_root__.$bvToast.toast('Please input amount', {
           title: this.$t('tip'),
-          variant: 'fail',
+          variant: 'danger',
+          autoHideDelay: 5000,
+        });
+        return false;
+      }
+
+      const value = BigNumber.from(Math.floor(this.ethPrice * 1e18)).mul(this.amount);
+
+      if (value.gt(this.user.ethBalance)) {
+        __g_root__.$bvToast.toast('Balance is not enough', {
+          title: this.$t('tip'),
+          variant: 'danger',
+          autoHideDelay: 5000,
+        });
+        return false;
+      }
+
+      try {
+        this.buyLoading = true;
+
+        const txHash = await sendTransaction({
+          to: config.FLOKIIPreSaleAddress,
+          value: utils.hexValue(value),
+          data: FLOKIIPreSaleInterface.encodeFunctionData('purchaseByETH()'),
+        });
+        const claimTx = await provider.waitForTransaction(txHash);
+
+        if (claimTx.status === 1) {
+          __g_root__.$bvToast.toast('Buy success', {
+            title: this.$t('tip'),
+            variant: 'success',
+            autoHideDelay: 5000,
+          });
+        } else {
+          __g_root__.$bvToast.toast('Buy fail', {
+            title: this.$t('tip'),
+            variant: 'danger',
+            autoHideDelay: 5000,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+      this.buyLoading = false;
+    },
+
+    async usdtBuySubmit() {
+      if (!this.amount) {
+        __g_root__.$bvToast.toast('Please input amount', {
+          title: this.$t('tip'),
+          variant: 'danger',
+          autoHideDelay: 5000,
+        });
+        return false;
+      }
+
+      const realPrice = BigNumber.from(Math.floor(this.usdtPrice * 1e6)).mul(this.amount);
+
+      if (realPrice.gt(this.user.usdtBalance)) {
+        __g_root__.$bvToast.toast('Balance is not enough', {
+          title: this.$t('tip'),
+          variant: 'danger',
           autoHideDelay: 5000,
         });
         return false;
@@ -266,110 +328,72 @@ export default {
 
       this.buyLoading = true;
 
-      // console.log(BigNumber.from(this.ethPrice * 1e18).mul(this.amount))
-      // console.log(BigNumber.from(this.amount))
-      // console.log(BigNumber.from(this.amount).mul(this.ethPrice).mul(1e18))
-      const txHash = await sendTransaction({
-        to: config.FLOKIIPreSaleAddress,
-        value: utils.hexValue(BigNumber.from(this.ethPrice * 1e18).mul(this.amount)),
-        data: FLOKIIPreSaleInterface.encodeFunctionData('purchaseByETH()'),
-      });
-      const claimTx = await provider.waitForTransaction(txHash);
+      try {
+        // const realPrice = this.amount * this.usdtPrice;
 
-      this.buyLoading = false;
+        const allowance = await USDTContract.allowance(
+          ethereum.selectedAddress,
+          config.FLOKIIPreSaleAddress,
+        );
 
-      if (claimTx.status === 1) {
-        __g_root__.$bvToast.toast('Buy success', {
-          title: this.$t('tip'),
-          variant: 'success',
-          autoHideDelay: 5000,
-        });
-      } else {
-        __g_root__.$bvToast.toast('Buy fail', {
-          title: this.$t('tip'),
-          variant: 'danger',
-          autoHideDelay: 5000,
-        });
-      }
-    },
+        if (allowance.lt(realPrice)) {
+          const approveTxHash = await sendTransaction({
+            to: config.USDTAddress,
+            data: USDTInterface.encodeFunctionData('approve', [
+              config.FLOKIIPreSaleAddress,
+              BigNumber.from('9'.repeat(32)).toHexString(),
+            ]),
+          });
 
-    async usdtBuySubmit() {
+          const approveTx = await provider.waitForTransaction(approveTxHash);
 
+          if (approveTx.status !== 1) {
+            __g_root__.$bvToast.toast('Approve fail', {
+              title: this.$t('tip'),
+              variant: 'danger',
+              autoHideDelay: 5000,
+            });
+            this.buyLoading = false;
+            return;
+          }
+          console.log(approveTx);
+        }
 
-      if (!this.amount) {
-        __g_root__.$bvToast.toast('Please input amount', {
-          title: this.$t('tip'),
-          variant: 'fail',
-          autoHideDelay: 5000,
-        });
-        return false;
-      }
+        // if (this.auction.lastPrice.gt(realPrice)) {
+        //   this.pricestate = false;
+        //   return;
+        // }
 
-      const realPrice = this.amount * this.usdtPrice;
-
-      const allowance = await USDTContract.allowance(
-        ethereum.selectedAddress,
-        config.FLOKIIPreSaleAddress,
-      );
-
-      console.log(allowance);
-      if (allowance.lt(realPrice * 1e6)) {
-        this.submitting = true;
-        const approveTxHash = await sendTransaction({
-          to: config.USDTAddress,
-          data: USDTInterface.encodeFunctionData('approve', [
-            config.FLOKIIPreSaleAddress,
-            BigNumber.from('9'.repeat(32)).toHexString(),
+        const bidTxHash = await sendTransaction({
+          to: config.FLOKIIPreSaleAddress,
+          gas: 960000,
+          data: FLOKIIPreSaleInterface.encodeFunctionData('purchaseByUSDT', [
+            realPrice,
           ]),
         });
+        const bidTx = await provider.waitForTransaction(bidTxHash);
 
-        const approveTx = await provider.waitForTransaction(approveTxHash);
-
-        if (approveTx.status !== 1) {
-          __g_root__.$bvToast.toast('Approve fail', {
+        if (bidTx.status === 1) {
+          __g_root__.$bvToast.toast('Buy success.', {
+            title: this.$t('tip'),
+            variant: 'success',
+            autoHideDelay: 5000,
+          });
+        } else {
+          __g_root__.$bvToast.toast('Buy fail, please retry.', {
             title: this.$t('tip'),
             variant: 'danger',
             autoHideDelay: 5000,
           });
-          this.submitting = false;
-          return;
         }
-        console.log(approveTx);
+      } catch (error) {
+
       }
-
-      // if (this.auction.lastPrice.gt(realPrice)) {
-      //   this.pricestate = false;
-      //   return;
-      // }
-
-      this.submitting = true;
-
-      const bidTxHash = await sendTransaction({
-        to: config.FLOKIIPreSaleAddress,
-        gas: 960000,
-        data: FLOKIIPreSaleInterface.encodeFunctionData('purchaseByUSDT', [
-          realPrice * 1e6,
-        ]),
-      });
-      const bidTx = await provider.waitForTransaction(bidTxHash);
-
-      if (bidTx.status === 1) {
-        __g_root__.$bvToast.toast('Buy success.', {
-          title: this.$t('tip'),
-          variant: 'success',
-          autoHideDelay: 5000,
-        });
-      } else {
-        __g_root__.$bvToast.toast('Buy fail, please retry.', {
-          title: this.$t('tip'),
-          variant: 'danger',
-          autoHideDelay: 5000,
-        });
-      }
+      this.buyLoading = false;
     },
 
     buyWithETH() {
-       if (!this.user.address) {
+      if (!this.user.address) {
         __g_root__.$bvToast.toast('Please connect wallet', {
           title: this.$t('tip'),
           variant: 'danger',
@@ -382,11 +406,11 @@ export default {
       this.$bvModal.show('buy-modal');
       setTimeout(() => {
         this.$refs.amountInput.focus();
-      }, 500)
+      }, 500);
     },
 
     buyWithUSDT() {
-       if (!this.user.address) {
+      if (!this.user.address) {
         __g_root__.$bvToast.toast('Please connect wallet', {
           title: this.$t('tip'),
           variant: 'danger',
@@ -399,7 +423,7 @@ export default {
       this.$bvModal.show('buy-modal');
       setTimeout(() => {
         this.$refs.amountInput.focus();
-      }, 500)
+      }, 500);
     },
 
   },
@@ -478,8 +502,9 @@ export default {
 
   .buy-content {
     color: #fff;
-    text-align: center;
-    padding-top: 64px;
+    // text-align: center;
+    margin-left: 48px;
+    padding-top: 48px;
     font-weight: bold;
     font-size: 18px;
   }
@@ -507,8 +532,8 @@ export default {
   justify-content: space-between;
   padding: 0 20px;
   .buy-button {
-    background: url(~@/assets/img_v2/button_bg@2x.png) center / 100% auto no-repeat;
-    width: 160px;
+    background: url(~@/assets/img_v2/button_bg_1.png) center / 100% auto no-repeat;
+    width: 100%;
     text-align: center;
     height: 50px;
     color: #364c87;
@@ -525,6 +550,39 @@ export default {
       margin-top: 2px;
       color: #fff;
       font-weight: 400;
+    }
+  }
+
+}
+
+.address-group {
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  .address-btn {
+    word-break: break-word;
+    width: 80%;
+    color: #fff;
+    flex-grow: 1;
+    font-size: 14px;
+    height: 48px;
+    color: #364c87;
+    padding-left: 8px;
+    padding-right: 8px;
+    letter-spacing: 2px;
+    padding-top: 6px;
+    font-weight: bold;
+    line-height: 17px;
+    background: url(~@/assets/img_v2/button_bg_2.png) center / 100% auto no-repeat;
+
+  }
+  .copy-btn {
+    flex-grow: 0;
+    color: #fff;
+    // margin-left: 8px;
+      text-align: right;
+    & img {
+      width: 52px;
     }
   }
 }
@@ -567,7 +625,6 @@ export default {
 .footer {
   background: #171522;
 }
-
 
 .build-with {
   color: #fff;

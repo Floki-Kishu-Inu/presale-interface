@@ -13,6 +13,9 @@ const user = {
     isMetamask: false,
     isWalletConnect: false,
     loaded: false,
+
+    ethBalance: 0,
+    usdtBalance: 0,
   },
 
   mutations: {

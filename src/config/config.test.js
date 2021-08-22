@@ -13,10 +13,10 @@ export default {
   // minAllowance: 10 ** 30,
   // appId: '1234567',
 
-  // gethServer: 'https://mainnet.infura.io/v3/6ef437a0bfc743d0bbfe73f72c90afd4', 主网
-  // chainId: 1,
-  gethServer: 'https://kovan.infura.io/v3/6ef437a0bfc743d0bbfe73f72c90afd4',
-  chainId: 42,
+  gethServer: 'https://mainnet.infura.io/v3/6ef437a0bfc743d0bbfe73f72c90afd4', // 主网
+  chainId: 1,
+  // gethServer: 'https://kovan.infura.io/v3/6ef437a0bfc743d0bbfe73f72c90afd4',
+  // chainId: 42,
 
   addressZero: '0x0000000000000000000000000000000000000000',
   hashZero: '0x0000000000000000000000000000000000000000000000000000000000000000',
